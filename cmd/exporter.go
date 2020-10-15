@@ -148,7 +148,7 @@ func (e *Exporter) Scrape() float64 {
 
 	url := fmt.Sprintf("%s%s", *appConfig.NginxAddress, *appConfig.NginxStatsPath)
 
-	if appConfig.IsDebugLevel {
+	if log.GetLevel() == log.DebugLevel {
 		log.Debugf(url)
 	}
 
@@ -188,7 +188,7 @@ func (e *Exporter) Scrape() float64 {
 		return 0
 	}
 
-	if appConfig.IsDebugLevel {
+	if log.GetLevel() == log.DebugLevel {
 		log.Debug(string(byteValue))
 	}
 

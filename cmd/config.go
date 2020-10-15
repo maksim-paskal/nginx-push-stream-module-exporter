@@ -21,7 +21,6 @@ import (
 type AppConfig struct {
 	Version          string
 	LogLevel         *string
-	IsDebugLevel     bool
 	LogPretty        *bool
 	WebListenAddress *string
 	WebTelemetryPath *string
@@ -42,7 +41,6 @@ var appConfig = &AppConfig{
 	Version:          fmt.Sprintf("%s-%s", gitVersion, buildTime),
 	LogLevel:         flag.String("log.level", "INFO", "log level"),
 	LogPretty:        flag.Bool("log.pretty", false, "log in pretty format"),
-	IsDebugLevel:     false,
 	WebListenAddress: flag.String("web.listen-address", ":8102", "Address on which to expose metrics and web interface"),
 	WebTelemetryPath: flag.String("web.telemetry-path", "/metrics", "Path under which to expose metrics"),
 	NginxAddress:     flag.String("nginx.address", "http://127.0.0.1", "nginx address"),
