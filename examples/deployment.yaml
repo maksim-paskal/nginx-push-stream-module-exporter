@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comet
+  labels:
+    app: comet
+spec:
+  selector:
+    matchLabels:
+      app: comet
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: comet
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8102"
+    spec:
+      containers:
+      - name: comet
+        resources:
+          requests:
+            cpu: 100m
+            memory: 300Mi
+        image: paskalmaksim/nginx-push-stream-module:0.5.6
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+      - name: exporter
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+        image: paskalmaksim/nginx-push-stream-module-exporter:v0.0.1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8102
