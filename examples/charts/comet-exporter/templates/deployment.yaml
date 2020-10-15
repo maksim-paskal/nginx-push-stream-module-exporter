@@ -1,0 +1,38 @@
+{{ range $i, $host := .Values.hosts }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $host.name | quote }}
+  labels:
+    app: comet-exporter
+    instance: {{ $host.name | quote }}
+spec:
+  selector:
+    matchLabels:
+      app: comet-exporter
+      instance: {{ $host.name | quote }}
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8102"
+      labels:
+        app: comet-exporter
+        instance: {{ $host.name | quote }}
+    spec:
+      containers:
+      - name: comet-exporter
+        image: paskalmaksim/nginx-push-stream-module-exporter:v0.0.1
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+        command:
+        - /app/nginx-push-stream-module-exporter
+        - -nginx.address={{ $host.address }}
+        ports:
+        - containerPort: 8102
+{{ end }}
