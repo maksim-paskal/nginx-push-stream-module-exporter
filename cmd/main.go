@@ -15,6 +15,8 @@ package main
 import (
 	"flag"
 	"net/http"
+
+	// nolint:gosec
 	_ "net/http/pprof"
 
 	"github.com/prometheus/client_golang/prometheus"
