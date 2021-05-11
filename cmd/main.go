@@ -22,10 +22,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-var (
-	gitVersion string = "dev"
-	buildTime  string
-)
+var gitVersion = "dev"
 
 func main() {
 	flag.Parse()

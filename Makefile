@@ -2,7 +2,8 @@ test:
 	./scripts/validate-license.sh
 	go fmt ./cmd/
 	go mod tidy
-	golangci-lint run --allow-parallel-runners -v --enable-all --disable gochecknoglobals,funlen,gosec --fix
+	go test -race ./cmd
+	golangci-lint run -v
 build:
 	docker-compose build
 start:
@@ -10,4 +11,4 @@ start:
 clean:
 	docker-compose down
 run:
-	./scripts/test.sh
+	go run --race -v ./cmd/ -log.level=DEBUG -log.pretty -nginx.address=http://127.0.0.1:18102 $(args)

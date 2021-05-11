@@ -15,7 +15,6 @@ package main
 import (
 	"encoding/json"
 	"flag"
-	"fmt"
 )
 
 type AppConfig struct {
@@ -38,7 +37,7 @@ func (ac *AppConfig) String() string {
 }
 
 var appConfig = &AppConfig{
-	Version:          fmt.Sprintf("%s-%s", gitVersion, buildTime),
+	Version:          gitVersion,
 	LogLevel:         flag.String("log.level", "INFO", "log level"),
 	LogPretty:        flag.Bool("log.pretty", false, "log in pretty format"),
 	WebListenAddress: flag.String("web.listen-address", ":8102", "Address on which to expose metrics and web interface"),
