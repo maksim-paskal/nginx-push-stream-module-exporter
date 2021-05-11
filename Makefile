@@ -18,3 +18,8 @@ allocs:
 	go tool pprof -http=127.0.0.1:8080 http://localhost:8102/debug/pprof/heap
 git-prune-gc:
 	curl -sSL https://get.paskal-dev.com/git-prune-gc | sh
+build-binnary:
+	make test
+	@./scripts/build-all.sh
+	ls -lah _dist
+	go mod tidy
