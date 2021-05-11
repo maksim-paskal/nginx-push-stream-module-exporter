@@ -16,16 +16,16 @@ import (
 	"flag"
 	"net/http"
 
+	// nolint:gosec
+	_ "net/http/pprof"
+
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/prometheus/common/version"
 	log "github.com/sirupsen/logrus"
 )
 
-var (
-	gitVersion string = "dev"
-	buildTime  string
-)
+var gitVersion = "dev"
 
 func main() {
 	flag.Parse()
