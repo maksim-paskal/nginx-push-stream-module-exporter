@@ -1,11 +1,15 @@
+tag=dev
+
 test:
 	./scripts/validate-license.sh
 	go fmt ./cmd/
 	go mod tidy
 	go test -race ./cmd
-	golangci-lint run -v
+	go run github.com/golangci/golangci-lint/cmd/golangci-lint@latest run -v
 build:
-	docker-compose build
+	docker build --pull . -t paskalmaksim/nginx-push-stream-module-exporter:$(tag)
+push:
+	docker push -t paskalmaksim/nginx-push-stream-module-exporter:$(tag)
 start:
 	docker-compose down && docker-compose up
 clean:
@@ -23,3 +27,7 @@ build-binnary:
 	@./scripts/build-all.sh
 	ls -lah _dist
 	go mod tidy
+scan:
+	trivy image \
+	-ignore-unfixed --no-progress --severity HIGH,CRITICAL \
+	paskalmaksim/nginx-push-stream-module-exporter:$(tag)
